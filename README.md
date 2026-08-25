@@ -8,7 +8,7 @@
 
 ## Repository Contents
 
-- `PES1UG24CS384_LAB01.docx` - Complete Lab 1 report document containing Requirements Table, UML Use-Case Model details, and Use-Case Flow Specification.
+- `PES1UG24CS384_LAB01.pdf` - Complete Lab 1 submission document containing Requirements Table, UML Use-Case Model details, embedded diagram, and Use-Case Flow Specification.
 - `requirements.md` - Complete Requirements Table with exactly 5 functional requirements and 2 non-functional requirements.
 - `README.md` - Repository overview and requirements traceability matrix.
 - `use-case-diagram.png` - Rendered UML Use-Case Diagram for the Remote Patient Vitals Alert & Monitoring System.
