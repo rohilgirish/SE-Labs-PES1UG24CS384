@@ -13,7 +13,6 @@
 - `use-case-flow.md` - One-page Use-Case Flow Specification for the core use case Receive Critical Alert & Acknowledge Alert.
 - `README.md` - Repository overview and requirements traceability matrix.
 - `use-case-diagram.png` - Rendered UML Use-Case Diagram for the Remote Patient Vitals Alert & Monitoring System.
-- `use-case-diagram.puml` - Reproducible PlantUML source code for the use-case diagram.
 
 ## Traceability Summary
 
