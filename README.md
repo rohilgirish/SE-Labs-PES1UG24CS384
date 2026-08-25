@@ -10,6 +10,7 @@
 
 - `PES1UG24CS384_LAB01.pdf` - Complete Lab 1 submission document containing Requirements Table, UML Use-Case Model details, embedded diagram, and Use-Case Flow Specification.
 - `requirements.md` - Complete Requirements Table with exactly 5 functional requirements and 2 non-functional requirements.
+- `use-case-flow.md` - One-page Use-Case Flow Specification for the core use case Receive Critical Alert & Acknowledge Alert.
 - `README.md` - Repository overview and requirements traceability matrix.
 - `use-case-diagram.png` - Rendered UML Use-Case Diagram for the Remote Patient Vitals Alert & Monitoring System.
 - `use-case-diagram.puml` - Reproducible PlantUML source code for the use-case diagram.
