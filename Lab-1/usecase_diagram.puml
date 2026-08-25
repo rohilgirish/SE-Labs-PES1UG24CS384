@@ -1,0 +1,51 @@
+﻿@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam roundcorner 10
+skinparam actorStyle awesome
+
+title Problem Statement #16: Remote Patient Vitals Alert & Monitoring App - UML Use Case Diagram
+
+actor "Remote Patient" as Patient <<Primary>>
+actor "On-Call Caregiver" as Caregiver <<Primary>>
+actor "Clinical Administrator\n/ Doctor" as Doctor <<Secondary>>
+actor "IoT Vital Sensor Device" as Sensor <<Secondary/System>>
+actor "Tier-2 Emergency Matrix\n/ Rapid Response" as Tier2Caregiver <<Secondary>>
+
+rectangle "Remote Patient Vitals Alert & Monitoring System" {
+    
+    usecase "UC-01: Stream & Ingest Vital Telemetry\n(SpO2, HR, BP)" as UC1
+    usecase "UC-02: Monitor Patient Vitals Dashboard" as UC2
+    usecase "UC-03: Process Critical Vital Breach\n& Escalate Caregiver Alert" as UC3
+    usecase "UC-04: Evaluate Clinical Thresholds" as UC4
+    usecase "UC-05: Configure Patient Baseline Thresholds" as UC5
+    usecase "UC-06: Acknowledge Emergency Alert" as UC6
+    usecase "UC-07: Escalate to Tier-2 Caregiver Matrix" as UC7
+    usecase "UC-08: Trigger Manual Emergency SOS Panic" as UC8
+    usecase "UC-09: Export Historical Vitals & Trend Report" as UC9
+    
+    ' Include relationships
+    UC1 .> UC4 : <<include>>
+    UC3 .> UC4 : <<include>>
+    
+    ' Extend relationships
+    UC7 .> UC6 : <<extend>>\n(condition: Unacknowledged > 60s)
+    UC7 .> UC8 : <<extend>>\n(condition: Critical SOS Triggered)
+}
+
+' Actor Associations
+Sensor --> UC1
+Patient --> UC8
+Patient --> UC2
+
+Caregiver --> UC2
+Caregiver --> UC6
+Caregiver --> UC3
+
+Doctor --> UC5
+Doctor --> UC9
+
+UC7 --> Tier2Caregiver
+UC3 --> Caregiver
+
+@enduml
