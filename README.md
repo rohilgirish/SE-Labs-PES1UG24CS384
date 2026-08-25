@@ -17,10 +17,10 @@
 
 | Requirement ID | Mapped Use Case(s) |
 | --- | --- |
-| FR-001 | Transmit Vital Telemetry, Evaluate Vital Thresholds & Detect Breach, Receive Critical Alert |
-| FR-002 | Transmit Vital Telemetry, View Live Vitals Dashboard, Authenticate User |
+| FR-001 | Transmit Vital Telemetry, Evaluate Vital Thresholds & Detect Breach |
+| FR-002 | Evaluate Vital Thresholds & Detect Breach, Receive Critical Alert |
 | FR-003 | Receive Critical Alert, Acknowledge Alert, Authenticate User |
-| FR-004 | Configure Clinical Thresholds, Authenticate User |
-| FR-005 | Acknowledge Alert, Escalate to Backup Caregiver |
-| NFR-001 | Cross-cutting requirement for telemetry ingestion throughput, scalability, and 99.99% uptime |
-| NFR-002 | Cross-cutting requirement for end-to-end encryption, HIPAA compliance, and secure user authentication |
+| FR-004 | Acknowledge Alert, Escalate to Backup Caregiver |
+| FR-005 | Configure Clinical Thresholds, Authenticate User |
+| NFR-001 | Cross-cutting — Transmit Vital Telemetry, Evaluate Vital Thresholds & Detect Breach (ingestion throughput & uptime) |
+| NFR-002 | Cross-cutting — Authenticate User, View Live Vitals Dashboard, Receive Critical Alert (encryption, HIPAA-equivalent compliance, secure auth) |
