@@ -1,0 +1,35 @@
+﻿@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Remote Patient" as Patient
+actor "On-Call Caregiver" as Caregiver
+actor "Backup Caregiver\n(secondary actor)" as BackupCaregiver
+
+rectangle "Remote Patient Vitals Alert & Monitoring System" {
+    usecase "Transmit Vital\nTelemetry" as UC_Transmit
+    usecase "Evaluate Vital Thresholds\n& Detect Breach" as UC_Evaluate
+    usecase "View Live Vitals\nDashboard" as UC_Dashboard
+    usecase "Authenticate User" as UC_Auth #FFF2CC
+    usecase "Receive Critical\nAlert" as UC_Alert
+    usecase "Acknowledge Alert" as UC_Ack
+    usecase "Configure Clinical\nThresholds" as UC_Config
+    usecase "Escalate to Backup\nCaregiver" as UC_Escalate #FCE4D6
+
+    UC_Dashboard .> UC_Auth : <<include>>
+    UC_Alert .> UC_Auth : <<include>>
+    UC_Config .> UC_Auth : <<include>>
+
+    UC_Escalate .> UC_Ack : <<extend>>\n[no ack within SLA]
+}
+
+Patient --> UC_Transmit
+Patient --> UC_Dashboard
+
+Caregiver --> UC_Dashboard
+Caregiver --> UC_Alert
+Caregiver --> UC_Ack
+Caregiver --> UC_Config
+
+UC_Escalate --> BackupCaregiver
+@enduml

@@ -1,31 +1,26 @@
-﻿# Software Engineering Lab (SE-Labs)
+﻿# Software Engineering Lab 1: Requirements Engineering & UML Use-Case Modelling
 
-**Student SRN:** `PES1UG24CS384`  
-**Problem Statement #16:** Remote Patient Vitals Alert & Monitoring App  
-**Domain:** Healthcare & Telemedicine  
-**Target Stakeholders / Actors:** Remote Patient, On-Call Caregiver  
+- SRN: PES1UG24CS384
+- Scenario No: 16
+- Project Title: Remote Patient Vitals Alert & Monitoring App
+- Primary Domain: Healthcare & Telemedicine
+- Target Actors: Remote Patient, On-Call Caregiver
 
----
+## Repository Contents
 
-## Repository Index
+- `PES1UG24CS384_LAB01.docx` - Complete Lab 1 report document containing Requirements Table, UML Use-Case Model details, and Use-Case Flow Specification.
+- `README.md` - Repository overview and requirements traceability matrix.
+- `use-case-diagram.png` - Rendered UML Use-Case Diagram for the Remote Patient Vitals Alert & Monitoring System.
+- `use-case-diagram.puml` - Reproducible PlantUML source code for the use-case diagram.
 
-| Directory | Lab Topic | Status |
-| :--- | :--- | :--- |
-| [📁 `Lab-1/`](./Lab-1/) | **Requirements Engineering & UML Use-Case Modelling** | ✅ Completed |
-| `Lab-2/` | Architecture & High-Level System Design | ⏳ Upcoming |
-| `Lab-3/` | Detailed Design & Class Diagrams | ⏳ Upcoming |
-| `Lab-4/` | Implementation & Unit Testing | ⏳ Upcoming |
-| `Lab-5/` | Integration & CI/CD Pipelines | ⏳ Upcoming |
+## Traceability Summary
 
----
-
-## Problem Statement Overview
-
-The **Remote Patient Vitals Alert & Monitoring App** is an enterprise-grade continuous monitoring pipeline designed for post-operative patients undergoing remote recovery. The system continuously ingests vital biometric telemetry (`SpO2`, `Heart Rate`, `Blood Pressure`), validates readings against patient-specific baseline clinical thresholds, detects physiological anomalies in real time, and orchestrates rapid emergency escalation across an on-call caregiver matrix.
-
----
-
-## Student Details
-- **SRN:** PES1UG24CS384
-- **Course:** Software Engineering Lab (CS351)
-- **Institution:** Department of Computer Science and Engineering, PES University
+| Requirement ID | Mapped Use Case(s) |
+| --- | --- |
+| FR-001 | Transmit Vital Telemetry, Evaluate Vital Thresholds & Detect Breach, Receive Critical Alert |
+| FR-002 | Transmit Vital Telemetry, View Live Vitals Dashboard, Authenticate User |
+| FR-003 | Receive Critical Alert, Acknowledge Alert, Authenticate User |
+| FR-004 | Configure Clinical Thresholds, Authenticate User |
+| FR-005 | Acknowledge Alert, Escalate to Backup Caregiver |
+| NFR-001 | Cross-cutting requirement for telemetry ingestion throughput, scalability, and 99.99% uptime |
+| NFR-002 | Cross-cutting requirement for end-to-end encryption, HIPAA compliance, and secure user authentication |

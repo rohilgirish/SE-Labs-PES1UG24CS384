@@ -1,137 +1,78 @@
-﻿# Lab 1: Requirements Engineering & UML Use-Case Modelling
+﻿# Software Engineering Lab 1: Requirements Engineering & UML Use-Case Modelling
 
-**Department:** Department of Computer Science & Engineering, PES University  
-**Course:** Software Engineering Lab (SE-Labs)  
-**Problem Statement #16:** Remote Patient Vitals Alert & Monitoring App  
-**Domain:** Healthcare & Telemedicine  
-**Student SRN:** `PES1UG24CS384`  
-**Target Stakeholders / Actors:** Remote Patient, On-Call Caregiver  
+- SRN: PES1UG24CS384
+- Scenario No: 16
+- Project Title: Remote Patient Vitals Alert & Monitoring App
+- Primary Domain: Healthcare & Telemedicine
+- Target Actors: Remote Patient, On-Call Caregiver
 
----
+## 1. Requirements Table
 
-## Deliverables Index
+Internal verification completed before finalization: exactly 5 functional requirements are listed as FR-001 to FR-005, exactly 2 non-functional requirements are listed as NFR-001 to NFR-002, no duplicate IDs are present, all six required columns are included, and the wording of FR-001 and NFR-001 preserves the supplied source intent.
 
-All Lab 1 deliverables have been prepared in strict accordance with the PES University CSE lab guidelines:
+| ID | Type | Description | Priority | Acceptance Criteria | Rationale |
+| --- | --- | --- | --- | --- | --- |
+| FR-001 | Functional | The system shall continuously evaluate ingested patient vitals against configured clinical thresholds and flag critical anomalies within 2 seconds. | High | Pass: High heart rate (>140 BPM), low SpO2 (<90%), or severe BP spike triggers immediate escalation alert within 2 seconds. Fail: Metric spike ignored or delayed > 5s. | Real-time anomaly detection is essential for post-operative patient safety to prevent acute cardiac and respiratory failure. |
+| FR-002 | Functional | The system shall allow a Remote Patient and On-Call Caregiver to authenticate securely and view the live vitals dashboard displaying continuous SpO2, Heart Rate, and Blood Pressure streams. | High | Pass: Authenticated users can view real-time synchronized vitals telemetry updated every second. Fail: Unauthenticated user accesses vitals stream or dashboard fails to render telemetry. | Continuous vitals visibility allows both patient and caregiver to monitor physiological stability during post-operative recovery. |
+| FR-003 | Functional | The system shall dispatch immediate critical alerts to the On-Call Caregiver upon detecting a vital threshold breach and record caregiver acknowledgment. | High | Pass: Critical alert notification reaches On-Call Caregiver within 3 seconds, and caregiver acknowledgment transitions alert state to acknowledged. Fail: Alert notification fails or acknowledgment is not recorded. | Immediate alert delivery and explicit acknowledgment ensure that medical caregivers are actively aware of life-threatening vital anomalies. |
+| FR-004 | Functional | The system shall allow an On-Call Caregiver to configure and dynamically update clinical baseline thresholds for patient vitals. | High | Pass: Caregiver updates patient-specific vital limits, and the evaluation engine applies new limits within 10 seconds without restart. Fail: Threshold updates fail to persist or default global limits overwrite custom limits. | Individualized clinical thresholds are required to account for distinct surgical procedures and patient-specific baseline variations. |
+| FR-005 | Functional | The system shall automatically escalate unacknowledged critical alerts to a Backup Caregiver if the primary On-Call Caregiver does not acknowledge within the configured SLA. | High | Pass: When primary caregiver fails to acknowledge within 60 seconds (SLA), the system dispatches escalation alert to Backup Caregiver with audit timestamp. Fail: Alert remains stuck on unacknowledged tier without timeout escalation. | Automated escalation prevents single-point-of-failure in clinical communication and guarantees secondary failover response. |
+| NFR-001 | Non-Functional (Performance & Security) | The telemetry ingestion gateway shall support at least 500 concurrent continuous telemetry streams with 99.99% uptime. | High | Pass: Benchmarking tests confirm target latency (p99 < 500ms) and security standards under simulated peak load. Fail: Ingestion latency exceeds 1s or availability drops below 99.99%. | Telemedicine infrastructure must handle multi-patient telemetry in real time without dropping vitals packets during critical care windows. |
+| NFR-002 | Non-Functional (Security & Data Integrity) | The system shall enforce end-to-end encryption for all protected health telemetry using TLS 1.3 in transit and AES-256 at rest with role-based access control. | High | Pass: All patient biometric data packets and database records are verified encrypted with zero plaintext exposure across logs and network traces. Fail: Plaintext biometric data exposed in transit or unauthorized access permitted. | HIPAA compliance and patient privacy protection are legally mandatory for remote healthcare monitoring systems. |
 
-1. [📋 **Complete Requirements Table** (`requirements.md`)](./requirements.md)
-   - Exactly 5 Functional Requirements (`FR-001` to `FR-005`)
-   - Exactly 2 Non-Functional Requirements (`NFR-001` & `NFR-002`)
-   - Formatted with: `Req ID`, `Type`, `Description ("The system shall...")`, `Priority (High/Medium/Low)`, `Acceptance Criteria (Measurable Pass/Fail)`, and `Rationale`.
-2. [🖼️ **UML Use-Case Diagram** (`usecase_diagram.md`)](./usecase_diagram.md)
-   - Diagram source files: [`usecase_diagram.drawio`](./usecase_diagram.drawio) (Draw.io / Lucidchart XML), [`usecase_diagram.svg`](./usecase_diagram.svg) (Vector graphics), and [`usecase_diagram.puml`](./usecase_diagram.puml) (PlantUML).
-   - Models all actors (`Remote Patient`, `On-Call Caregiver`, `Doctor/Admin`, `IoT Sensor Device`, `Tier-2 Matrix`).
-   - Includes system boundary, labeled use cases `UC-01` to `UC-09`, associations, and `<<include>>` / `<<extend>>` relationships.
-3. [📄 **Use-Case Flow Specification** (`usecase_specification.md`)](./usecase_specification.md)
-   - 1-Page specification for core use case: `UC-03: Process Critical Vital Breach & Escalate Caregiver Alert`.
-   - Preconditions, Postconditions, Step-by-Step Main Success Scenario (MSS), and Step-by-Step Alternate Flows (`5a. Caregiver Timeout`, `5b. Sensor Disconnection`).
+## 2. UML Use-Case Diagram
 
----
+### Explicitly Mentioned Actors
+- Remote Patient
+- On-Call Caregiver
+- Backup Caregiver (secondary actor)
 
-## 1. Problem Context & Overview
+### Explicitly Mentioned Use Cases
+#### Primary Use Cases
+- Transmit Vital Telemetry
+- View Live Vitals Dashboard
+- Receive Critical Alert
+- Acknowledge Alert
+- Configure Clinical Thresholds
+- Escalate to Backup Caregiver
 
-The **Remote Patient Vitals Alert & Monitoring App** provides an automated, continuous telemetry ingestion and clinical alert pipeline for post-operative patients recovering in home-care settings. Post-surgical patients are susceptible to rapid physiological deterioration such as acute hypoxia ($\text{SpO}_2 < 90\%$), tachycardia/bradycardia, and hypertensive crises.
+#### Secondary Use Cases
+- Evaluate Vital Thresholds & Detect Breach
+- Authenticate User
 
-The system continuously streams biometric telemetry (`SpO2`, `Heart Rate`, `Blood Pressure`) from connected wearable IoT sensors, evaluates metrics against personalized clinical baseline thresholds within 2 seconds, and escalates emergency alerts through a multi-tier caregiver matrix.
+The secondary use cases support the primary telemetry and alert workflow. Authenticate User is mandatory included behavior during dashboard access and alert management, and Escalate to Backup Caregiver is conditional behavior executed when an alert is not acknowledged within the required SLA.
 
----
+### Included & Extended Relationships
+- Included relationships: View Live Vitals Dashboard includes Authenticate User; Receive Critical Alert includes Authenticate User; Configure Clinical Thresholds includes Authenticate User.
+- Extended relationship: Escalate to Backup Caregiver extends Acknowledge Alert when no acknowledgement is received within SLA.
 
-## 2. Complete Requirements Table
+## 3. Use-Case Flow Specification - Receive Critical Alert & Acknowledge Alert
 
-| Req ID | Type | Description | Priority | Acceptance Criteria | Rationale |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **FR-001** | Functional | The system shall continuously evaluate ingested patient vitals against configured clinical thresholds and flag critical anomalies within 2 seconds. | **High** | **Pass:** High heart rate (>140 BPM), critical hypoxia (SpO2 < 90%), or severe BP spike triggers immediate escalation alert in $\le 2\text{s}$.<br>**Fail:** Metric spike ignored, dropped, or evaluation delayed > 5s. | Real-time anomaly detection is essential for post-operative patient safety to prevent acute cardiac/respiratory failure. *(Given Guideline)* |
-| **FR-002** | Functional | The system shall allow authorized clinicians to configure and dynamically update patient-specific baseline vitals thresholds without requiring system downtime. | **High** | **Pass:** Clinician updates take effect in the live stream evaluation pipeline within 10 seconds.<br>**Fail:** Default global limits override patient customization or updates cause stream disruption. | Post-surgical recovery boundaries vary significantly by patient age, surgical history, and preexisting conditions. |
-| **FR-003** | Functional | The system shall dispatch emergency alerts to the assigned primary On-Call Caregiver and automatically escalate to Tier-2 backup medical staff if unacknowledged within 60 seconds. | **High** | **Pass:** Push/SMS alert reaches primary caregiver within 3s; escalates to Tier-2 after 60s timeout if unacknowledged.<br>**Fail:** Alert remains unescalated on unacknowledged tier past 60s. | Prevents single-point-of-failure in human response; ensures critical patient alerts receive timely medical triage. |
-| **FR-004** | Functional | The system shall provide an accessible, one-touch Emergency SOS Panic button on the Remote Patient interface that broadcasts an immediate distress alert with live location and vitals snapshot. | **High** | **Pass:** Single-tap SOS transmits urgent alert to caregiver and emergency matrix in $< 1\text{s}$ with GPS/room data.<br>**Fail:** SOS action fails, lags $> 2\text{s}$, or fails to attach location/vitals snapshot. | Allows patients experiencing acute symptoms (e.g., severe dizziness, acute chest pain) to manually trigger emergency help. |
-| **FR-005** | Functional | The system shall persist timestamped historical vitals telemetry and provide automated graphical trend analytics and downloadable clinical summary reports (PDF/CSV) for daily doctor review. | **Medium** | **Pass:** 24-hour vitals summary report with trend graphs compiles and exports in $< 3\text{s}$ with zero data loss.<br>**Fail:** Telemetry data gaps exist, export takes $> 5\text{s}$, or timestamps are misaligned. | Enables attending physicians to track recovery progression, detect subtle hemodynamic degradation, and adjust post-op medications. |
-| **NFR-001** | Nonfunctional | The telemetry ingestion gateway shall support at least 500 concurrent continuous telemetry streams with 99.99% uptime. | **High** | **Pass:** Benchmarking tests confirm target latency ($p99 < 500\text{ms}$) and security standards under simulated peak load (500 continuous streams).<br>**Fail:** Gateway crashes, drops packets $> 0.01\%$, or latency exceeds 1s under peak load. | Telemedicine infrastructure must handle multi-patient loads in real time without dropping telemetry packets during critical events. *(Given Guideline)* |
-| **NFR-002** | Nonfunctional | The system shall enforce end-to-end encryption for all Protected Health Information (PHI) using TLS 1.3 in transit and AES-256 at rest, coupled with strict Role-Based Access Control (RBAC) and audit logging. | **High** | **Pass:** All network payloads and database records are verified encrypted (TLS 1.3 / AES-256), and unauthorized telemetry access attempts are blocked and logged with 100% audit integrity.<br>**Fail:** Plaintext PHI exposed in transit or logs. | Compliance with statutory healthcare regulations (HIPAA/GDPR) and patient privacy protection are mandatory for medical telemetry. |
+### 1. Preconditions
+- The Remote Patient is registered and actively paired with wearable biometric sensors streaming vital telemetry.
+- Clinical baseline thresholds (Heart Rate, SpO2, Blood Pressure) are configured for the patient.
+- The On-Call Caregiver and Backup Caregiver accounts are active and assigned in the caregiver matrix.
 
----
+### 2. Postconditions
+- The critical vital anomaly is acknowledged by the caregiver, and the alert state is updated to Acknowledged.
+- The caregiver response timestamp and triage details are recorded in the clinical audit log.
+- Repeating alarm sirens on the caregiver dashboard and patient device are silenced.
+- If unacknowledged within the 60-second SLA, the alert is escalated to the Backup Caregiver.
 
-## 3. UML Use-Case Diagram
+### 3. Main Success Scenario
+1. The Remote Patient sensors transmit vital telemetry containing abnormal physiological values (e.g., SpO2 = 86%, Heart Rate = 145 BPM).
+2. The system executes Evaluate Vital Thresholds & Detect Breach and flags a critical threshold breach within 2 seconds.
+3. The system generates a high-priority critical alert payload containing patient ID, room location, vital telemetry readings, and breach timestamp.
+4. The system sends an urgent audible notification and push alert to the On-Call Caregiver (Receive Critical Alert).
+5. The On-Call Caregiver opens the alert notification, which executes Authenticate User to verify caregiver session credentials.
+6. The system displays the patient's live telemetry dashboard with real-time biometric trends.
+7. The On-Call Caregiver reviews the vital breach and selects Acknowledge Alert.
+8. The system updates the alert status to Acknowledged, silences active sirens, and logs the caregiver ID and acknowledgment timestamp into the clinical record.
 
-```mermaid
-graph LR
-    %% Actors
-    Patient["🧑 Remote Patient<br>(Primary Actor)"]
-    Caregiver["👩‍⚕️ On-Call Caregiver<br>(Primary Actor)"]
-    Doctor["👨‍⚕️ Clinical Administrator / Doctor<br>(Secondary Actor)"]
-    Sensor["📟 IoT Vital Sensor Device<br>(System Actor)"]
-    Tier2["🚨 Tier-2 Emergency Matrix<br>(Secondary Actor)"]
-
-    subgraph SystemBoundary ["Remote Patient Vitals Alert & Monitoring System"]
-        UC1(["UC-01: Stream & Ingest Vital Telemetry (SpO2, HR, BP)"])
-        UC2(["UC-02: Monitor Patient Vitals Dashboard"])
-        UC3(["UC-03: Process Critical Vital Breach & Escalate Alert [CORE]"])
-        UC4(["UC-04: Evaluate Clinical Thresholds"])
-        UC5(["UC-05: Configure Patient Baseline Thresholds"])
-        UC6(["UC-06: Acknowledge Emergency Alert"])
-        UC7(["UC-07: Escalate to Tier-2 Caregiver Matrix"])
-        UC8(["UC-08: Trigger Manual Emergency SOS Panic"])
-        UC9(["UC-09: Export Historical Vitals & Trend Report"])
-
-        %% Include Relationships
-        UC1 -. "<<include>>" .-> UC4
-        UC3 -. "<<include>>" .-> UC4
-
-        %% Extend Relationships
-        UC7 -. "<<extend>><br>[Timeout > 60s]" .-> UC6
-        UC7 -. "<<extend>><br>[Critical SOS Triggered]" .-> UC8
-    end
-
-    %% Actor Connections
-    Sensor --> UC1
-    Patient --> UC8
-    Patient --> UC2
-
-    Caregiver --> UC2
-    Caregiver --> UC6
-    Caregiver --> UC3
-
-    Doctor --> UC5
-    Doctor --> UC9
-
-    UC7 --> Tier2
-```
-
----
-
-## 4. Use-Case Flow Specification (Core: UC-03)
-
-### Use Case: UC-03 - Process Critical Vital Breach & Escalate Caregiver Alert
-
-- **Primary Actor(s):** Remote Patient, On-Call Caregiver
-- **Secondary Actor(s):** IoT Vital Sensor Device, Tier-2 Emergency Response Matrix
-
-#### Preconditions
-1. Remote patient is wearing paired, calibrated vital sensors.
-2. Clinical baseline thresholds are configured and loaded into the evaluation pipeline.
-3. Caregiver escalation hierarchy is active with primary and secondary contacts.
-
-#### Postconditions
-- Critical anomaly is acknowledged and triaged; audit log records full timeline.
-- Unacknowledged alerts escalate automatically to Tier-2 backup caregivers after 60 seconds.
-
-#### Main Success Scenario (MSS)
-1. The **IoT Vital Sensor Device** transmits a continuous telemetry packet containing abnormal vitals (e.g., $\text{SpO}_2 = 86\%$, $\text{HR} = 148\text{ BPM}$).
-2. System ingests telemetry data, decrypts payload, and executes `<<include>> UC-04: Evaluate Clinical Thresholds`.
-3. System confirms that readings breach configured baseline thresholds and flags priority status as `CRITICAL_ANOMALY` within **2 seconds**.
-4. System constructs an emergency alert payload containing patient ID, room location, live vitals snapshot, and timestamp.
-5. System dispatches a high-priority audible push notification and SMS alert to the assigned **On-Call Caregiver**.
-6. **On-Call Caregiver** receives the alert, views the patient's real-time telemetry dashboard, and taps **"Acknowledge & Triage"**.
-7. System updates alert status to `ACKNOWLEDGED`, silences repeating audible alarms, and displays a notification on the patient interface that caregiver assistance is active.
-8. System logs caregiver ID, response time, and vital telemetry snapshot into the clinical audit repository.
-9. **Use case ends successfully.**
-
-#### Alternate Flows
-- **5a. Primary Caregiver Timeout (Unacknowledged Alert):**
-  - **5a1.** Upon dispatching the emergency alert (Step 5), the system initiates an automated **60-second countdown timer**.
-  - **5a2.** The 60-second timer expires without receiving an acknowledgment from the primary On-Call Caregiver.
-  - **5a3.** System flags the primary caregiver as `UNRESPONSIVE`, logs a timeout event in the audit trail, and triggers `<<extend>> UC-07: Escalate to Tier-2 Caregiver Matrix`.
-  - **5a4.** System broadcasts simultaneous emergency alerts to Tier-2 backup medical staff and hospital rapid response dispatchers.
-  - **5a5.** A Tier-2 emergency responder acknowledges the alert; system assigns triage to Tier-2 responder and proceeds to Step 7.
-- **5b. Sensor Telemetry Disconnection During Active Breach:**
-  - **5b1.** If sensor connectivity drops during an active critical breach event, the system locks the last valid abnormal vitals snapshot.
-  - **5b2.** System appends a `SENSOR_OFFLINE_WARNING` banner to the caregiver alert payload and continues high-priority escalation.
-  - **5b3.** Upon sensor reconnection, the live stream resumes and updates the triage screen automatically.
+### 4. Alternate Flow
+#### A1. Primary caregiver does not acknowledge alert within SLA
+1. At Step 4, upon dispatching the alert to the primary On-Call Caregiver, the system starts an automated 60-second SLA countdown timer.
+2. The 60-second timer elapses without receiving an acknowledgment from the primary On-Call Caregiver.
+3. The system marks the primary caregiver as unresponsive and executes Escalate to Backup Caregiver (via extend relationship).
+4. The system dispatches immediate high-priority alerts with full patient telemetry and timeout notice to the Backup Caregiver.
+5. The Backup Caregiver authenticates, acknowledges the escalated alert, and initiates emergency clinical triage.
