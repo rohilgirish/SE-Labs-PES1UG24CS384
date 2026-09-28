@@ -1,0 +1,95 @@
+﻿@startuml
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+skinparam roundcorner 8
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam defaultFontSize 11
+
+title UML 2.5 Component Diagram - Remote Patient Vitals Alert & Monitoring System (Scenario 16)
+
+package "Client Presentation Subsystem" {
+    [Patient Wearable App\n<<component>>] as PatientApp
+    [Caregiver Clinical Portal\n<<component>>] as CaregiverPortal
+}
+
+package "Secure Edge Gateway Subsystem" {
+    [API Gateway & Ingress Guard\n<<component>>] as APIGateway
+    port "pIngress" as p1
+    port "pCaregiver" as p2
+}
+
+package "Core Application & Processing Subsystem" {
+    [Telemetry Ingestion Engine\n<<component>>] as IngestionEngine
+    [Clinical Threshold Evaluation Engine\n<<component>>] as EvalEngine
+    [Alert Dispatcher & Escalation Matrix\n<<component>>] as AlertDispatcher
+    [Patient Baseline Config Service\n<<component>>] as ConfigService
+    [Historical Analytics & Reporting Service\n<<component>>] as AnalyticsService
+}
+
+package "Data Persistence & Storage Subsystem" {
+    database "Time-Series Vitals DB\n(TimescaleDB/InfluxDB)" as VitalsDB
+    database "Caregiver Matrix & Profiles DB\n(PostgreSQL)" as ProfileDB
+    database "Real-Time Alert State Cache\n(Redis)" as AlertCache
+    database "Immutable Compliance Audit Ledger\n(WORM Ledger)" as AuditLedger
+}
+
+package "Cross-Cutting Security Subsystem" {
+    [Compliance & Audit Logger\n<<component>>] as AuditLogger
+}
+
+' Interfaces
+interface "ITelemetryIngress" as ITeleIngress
+interface "ICaregiverAPI" as ICaregiverAPI
+interface "IVitalStream" as IVitalStream
+interface "IEvaluationRule" as IEvalRule
+interface "IAlertNotification" as IAlertNotify
+interface "IEscalationSLA" as IEscalate
+interface "IConfigService" as IConfig
+interface "IAnalyticsQuery" as IAnalytics
+interface "IAuditLog" as IAudit
+
+' Connections
+PatientApp --> p1 : HTTPS / MQTT (TLS 1.3)
+p1 -down- ITeleIngress
+APIGateway -up-( ITeleIngress
+
+CaregiverPortal --> p2 : HTTPS / WSS
+p2 -down- ICaregiverAPI
+APIGateway -up-( ICaregiverAPI
+
+APIGateway --> IVitalStream : Ingest Payload
+IngestionEngine -up- IVitalStream
+
+IngestionEngine --> IEvalRule : Stream Readings (<2s)
+EvalEngine -up- IEvalRule
+
+EvalEngine --> IAlertNotify : Breach Detected
+AlertDispatcher -up- IAlertNotify
+
+AlertDispatcher --> IEscalate : Timeout > 60s
+AlertDispatcher ..> AlertCache : Active SLA State
+
+CaregiverPortal --> IConfig : Update Thresholds
+ConfigService -up- IConfig
+ConfigService ..> EvalEngine : Dynamic Threshold Sync
+
+CaregiverPortal --> IAnalytics : Request 24h Trends
+AnalyticsService -up- IAnalytics
+
+' Database connections
+IngestionEngine --> VitalsDB : Raw Vitals Stream
+AnalyticsService --> VitalsDB : Aggregation Queries
+ConfigService --> ProfileDB : Patient Baselines
+AlertDispatcher --> ProfileDB : Caregiver Matrix Hierarchy
+AlertDispatcher --> AlertCache : Lock / Acknowledge State
+
+' Audit connections
+IngestionEngine ..> IAudit
+EvalEngine ..> IAudit
+AlertDispatcher ..> IAudit
+ConfigService ..> IAudit
+AuditLogger -up- IAudit
+AuditLogger --> AuditLedger : Cryptographic Hash Chain
+
+@enduml

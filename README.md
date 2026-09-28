@@ -6,8 +6,11 @@
 - Primary Domain: Healthcare & Telemedicine
 - Target Actors: Remote Patient, On-Call Caregiver
 
-## Repository Structure
+---
 
-| Directory | Lab Description | Status |
+## Repository Index
+
+| Directory | Lab Topic | Status |
 | --- | --- | --- |
-| [Lab-1](./Lab-1/) | Requirements Engineering & UML Use-Case Modelling | Completed |
+| [📁 Lab-1](./Lab-1/) | Requirements Engineering & UML Use-Case Modelling | Completed |
+| [📁 Lab-3](./Lab-3/) | Component Modelling & Architectural Pattern Selection | Completed |
