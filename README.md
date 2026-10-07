@@ -12,5 +12,6 @@
 
 | Directory | Lab Topic | Status |
 | --- | --- | --- |
-| [📁 Lab-1](./Lab-1/) | Requirements Engineering & UML Use-Case Modelling | Completed |
-| [📁 Lab-3](./Lab-3/) | Component Modelling & Architectural Pattern Selection | Completed |
+| [Lab-1](./Lab-1/) | Requirements Engineering & UML Use-Case Modelling | Completed |
+| [Lab-2](./Lab-2/) | Agile Backlog Creation & Sprint Simulation | Completed |
+| [Lab-3](./Lab-3/) | Component Modelling & Architectural Pattern Selection | Completed |
