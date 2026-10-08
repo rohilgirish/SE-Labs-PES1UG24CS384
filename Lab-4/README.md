@@ -90,6 +90,32 @@ Lab-4/
 └── after.mp4
 ```
 
+## Identified Bugs & Original Issues
+
+1. **Incomplete Win Detection (`board.py`):**
+   - In `winner(self, token)`, only horizontal `(0, 1)` and vertical `(1, 0)` vectors were checked. Diagonal alignments (`(1, 1)` down-right and `(1, -1)` down-left) were completely omitted, meaning diagonal 4-in-a-row connections failed to trigger game wins.
+2. **Improper Game Termination & Input Validation (`game.py`):**
+   - Out-of-bounds column numbers (outside 1-7), non-numeric values, or choosing full columns were not handled cleanly, leading to confusing states or improper termination.
+3. **Basic AI with No Threat Evaluation (`ai.py`):**
+   - The AI picked randomly from legal columns without checking if it had an immediate winning move or if the opponent was one move away from winning (leading to unblocked player wins).
+4. **Missing Move-Level Feedback (`game.py`):**
+   - There was no status message indicating where the player or AI dropped a disc.
+
+---
+
+## Changes Implemented & Tasks Completed
+
+- **Task 1 — Complete Win Detection ([board.py](file:///C:/Users/Lenovo/Desktop/SE-Labs-PES1UG24CS384/Lab-4/board.py)):**
+  - Updated `directions` to `[(0, 1), (1, 0), (1, 1), (1, -1)]` to accurately detect horizontal, vertical, and both diagonal 4-in-a-row sequences without allowing shorter sequences to trigger wins.
+- **Task 2 — Complete Game Termination & Validation ([game.py](file:///C:/Users/Lenovo/Desktop/SE-Labs-PES1UG24CS384/Lab-4/game.py)):**
+  - Added strict input bounds checking (columns 1–7), handled `KeyboardInterrupt` / `EOFError` / `q` gracefully, prevented moves into full columns with informative messages, and ensured terminal states (wins, draws) halt the turn loop cleanly.
+- **Task 3 — Intelligent AI Decision Making ([ai.py](file:///C:/Users/Lenovo/Desktop/SE-Labs-PES1UG24CS384/Lab-4/ai.py)):**
+  - Implemented 1-move lookahead: AI checks and executes immediate winning moves, detects and blocks immediate opponent threats, avoids moves that set up an opponent win directly above, and heuristics to prioritize central columns.
+- **Task 4 — Move-Level Feedback ([game.py](file:///C:/Users/Lenovo/Desktop/SE-Labs-PES1UG24CS384/Lab-4/game.py)):**
+  - Added feedback (`"You placed a disc in column X."` / `"AI placed a disc in column Y."`) printed exactly once per valid disc drop.
+
+---
+
 ## Submission Checklist
 
 Submission is only the following three things:
