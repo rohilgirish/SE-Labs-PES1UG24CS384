@@ -1,180 +1,211 @@
 %PDF-1.4
 1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
-2 0 obj << /Type /Pages /Kids [3 0 R 5 0 R 7 0 R] /Count 3 >> endobj
-3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 9 0 R /F2 10 0 R >> >> /Contents 4 0 R >> endobj
-4 0 obj << /Length 3557 >> stream
+2 0 obj << /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R] /Count 4 >> endobj
+3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R /F3 13 0 R >> >> /Contents 4 0 R >> endobj
+4 0 obj << /Length 2919 >> stream
 BT
-/F2 16 Tf 40 800 Td (1 Prompt) Tj
-ET BT /F1 9 Tf 40 770 Td 13.5 TL
-(def winner\(self, token\):) '
-(directions = [\(0, 1\), \(1, 0\)]for r in range\(ROWS\):for c in range\(COLS\):if self.grid[r][c]) '
-(!= token:continuefor dr, dc in directions:if all\(0 <= r + i * dr < ROWS and0 <= c + i * dc) '
-(< COLS and self.grid[r + i * dr][c + i * dc] == tokenfor i in range\(4\)\):return Truereturn) '
-(False) '
-() '
-(In board.py, update the winner method to detect 4-in-a-row in all four directions:) '
-(horizontal \(0, 1\), vertical \(1, 0\), diagonal down-right \(1, 1\), and diagonal down-left \(1,) '
-(-1\). Ensure shorter sequences do not count as wins.) '
-() '
-(Simulating game moves without altering the actual board.) '
-(Simulating game moves without altering the actual board.) '
-() '
-(There are still no Python files in this workspace, so here is the upgraded method to drop) '
-(into ai.py rather than an edit:) '
-(python) '
-(import copy import random COLS = 7 class AI: # keep your existing class name def) '
-(choose_column\(self, board, me="O", opponent="X"\): legal = [c for c in range\(COLS\) if) '
-(board.grid[0][c] == "."] if not legal: return None # 1. Take an immediate win. for col in) '
-(legal: if self._wins_if_played\(board, col, me\): return col # 2. Block the opponent's) '
-(immediate win. for col in legal: if self._wins_if_played\(board, col, opponent\): return col) '
-(# 3. Choose safely: avoid moves that hand the opponent a win # on top of our piece, and) '
-(prefer central columns. safe = [c for c in legal if not self._gives_win_above\(board, c,) '
-(me, opponent\)] candidates = safe or legal # if every move is unsafe, still play center =) '
-(COLS // 2 best = min\(abs\(c - center\) for c in candidates\) return random.choice\([c for c in) '
-(candidates if abs\(c - center\) == best]\) @staticmethod def _wins_if_played\(board, col,) '
-(token\): """True if dropping token in col wins. Works on a copy; the real board is) '
-(untouched.""" trial = copy.deepcopy\(board\) if trial.drop\(col, token\) is None: return False) '
-(return trial.winner\(token\) @staticmethod def _gives_win_above\(board, col, me, opponent\):) '
-("""True if playing col lets the opponent win by playing the same column next.""" trial =) '
-(copy.deepcopy\(board\) if trial.drop\(col, me\) is None: return False if trial.grid[0][col] !=) '
-(".": # column now full, no reply possible there return False return trial.drop\(col,) '
-(opponent\) is not None and trial.winner\(opponent\)) '
-() '
-(How it works:) '
-(Win, then block: it tries each legal column for the AI first, then for the opponent. It) '
-(plays the first column that wins, or blocks if the opponent could win there. Winning is) '
-(checked before blocking, so the AI never blocks when it could simply win.) '
-(Safe fallback: it skips any column where the AI's piece would let the opponent win by) '
-(stacking on top of it. If every move is unsafe, it plays a legal one anyway rather than) '
-(returning nothing. Among the safe moves it prefers the center columns, which are stronger) '
-(in Connect Four, and picks randomly among ties.) '
-(Full columns: only columns whose top cell is "." are considered, and drop returning None) '
-(is treated as "not a win". If the board is full the method returns None, which the game) '
-(loop already handles.) '
-(No board mutation: each trial runs on copy.deepcopy\(board\), because I don't know whether) '
-(your Board has an undo method. If it has a cheap undo or a copy method, swap that in for) '
-(speed. With 7 columns the deepcopy cost doesn't matter.) '
+/F1 8.5 Tf 40 810 Td (Lab 4: VibeCoding - Prompt Trajectory Log) Tj 340 0 Td (Page 1 of 4) Tj
+ET BT 40 780 Td 13.5 TL
+/F2 13 Tf (Lab 4: VibeCoding - LLM Chat History) ' /F1 9 Tf
+/F1 8.5 Tf (Student SRN: PES1UG24CS384 | Scenario 15: Connect Four vs AI) '
+/F1 8.5 Tf (Claude Chat Share Link: https://claude.ai/share/56914cc2-0791-40fb-b8c1-a1e3acbea036) '
+/F1 9 Tf () '
+/F1 8 Tf (==================================================================) '
+/F2 10.5 Tf (PROMPT 1 \(Task 1: Complete Win Detection\)) ' /F1 9 Tf
+/F1 8 Tf (==================================================================) '
+/F2 9.5 Tf (User Prompt:) ' /F1 9 Tf
+/F1 9 Tf (    In board.py, update the winner method to detect 4-in-a-row in all four directions:) '
+/F1 9 Tf (    horizontal \(0, 1\), vertical \(1, 0\), diagonal down-right \(1, 1\), and diagonal down-left \(1, -1\).) '
+/F1 9 Tf (    Ensure shorter sequences do not count as wins.) '
+/F1 9 Tf () '
+/F2 9.5 Tf (LLM Response / Implemented Code \(board.py\):) ' /F1 9 Tf
+/F3 8.5 Tf (def winner\(self, token\):) ' /F1 9 Tf
+/F3 8.5 Tf (    # directions: horizontal, vertical, diagonal-down-right, diagonal-down-left) ' /F1 9 Tf
+/F3 8.5 Tf (    directions = [\(0, 1\), \(1, 0\), \(1, 1\), \(1, -1\)]) ' /F1 9 Tf
+/F3 8.5 Tf (    for r in range\(ROWS\):) ' /F1 9 Tf
+/F3 8.5 Tf (        for c in range\(COLS\):) ' /F1 9 Tf
+/F3 8.5 Tf (            if self.grid[r][c] != token:) ' /F1 9 Tf
+/F3 8.5 Tf (                continue) ' /F1 9 Tf
+/F3 8.5 Tf (            for dr, dc in directions:) ' /F1 9 Tf
+/F3 8.5 Tf (                if all\() ' /F1 9 Tf
+/F3 8.5 Tf (                    0 <= r + i * dr < ROWS) ' /F1 9 Tf
+/F3 8.5 Tf (                    and 0 <= c + i * dc < COLS) ' /F1 9 Tf
+/F3 8.5 Tf (                    and self.grid[r + i * dr][c + i * dc] == token) ' /F1 9 Tf
+/F3 8.5 Tf (                    for i in range\(4\)) ' /F1 9 Tf
+/F3 8.5 Tf (                \):) ' /F1 9 Tf
+/F3 8.5 Tf (                    return True) ' /F1 9 Tf
+/F3 8.5 Tf (    return False) ' /F1 9 Tf
+/F1 9 Tf () '
+/F1 8 Tf (==================================================================) '
+/F2 10.5 Tf (PROMPT 2 \(Task 2: Complete Game Termination & Validation\)) ' /F1 9 Tf
+/F1 8 Tf (==================================================================) '
+/F2 9.5 Tf (User Prompt:) ' /F1 9 Tf
+/F1 9 Tf (    In game.py, ensure proper input validation for column numbers \(1 to 7\), clean error) '
+/F1 9 Tf (    messages when a column is full or invalid without crashing, and ensure winning moves) '
+/F1 9 Tf (    and draws terminate the game cleanly.) '
+/F1 9 Tf () '
+/F2 9.5 Tf (LLM Response / Implemented Code \(game.py\):) ' /F1 9 Tf
+/F3 8.5 Tf (while True:) ' /F1 9 Tf
+/F3 8.5 Tf (    self.board.print\(\)) ' /F1 9 Tf
+/F3 8.5 Tf (    if self.turn == 'X':) ' /F1 9 Tf
+/F3 8.5 Tf (        try:) ' /F1 9 Tf
+/F3 8.5 Tf (            raw = input\('Column \(1-7\), or q: '\).strip\(\).lower\(\)) ' /F1 9 Tf
 ET
 endstream
 endobj
-5 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 9 0 R /F2 10 0 R >> >> /Contents 6 0 R >> endobj
-6 0 obj << /Length 3216 >> stream
+5 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R /F3 13 0 R >> >> /Contents 6 0 R >> endobj
+6 0 obj << /Length 2722 >> stream
 BT
-/F2 9 Tf 40 810 Td (1 Prompt - Cont.) Tj 420 0 Td (Page 2 of 3) Tj
-ET BT /F1 9 Tf 40 780 Td 13.5 TL
-() '
-(This relies on board.drop\(col, token\) returning None for a full column and) '
-(board.winner\(token\) being the four-direction version from earlier. If you attach ai.py and) '
-(the board file, I can apply the change and test it against a few board positions.) '
-() '
-(from board import Board, COLS from ai import AI class Game: def __init__\(self\): self.board) '
-(= Board\(\) self.ai = AI\(\) self.turn = "X" def run\(self\): print\("Connect Four ? you are X."\)) '
-(while True: self.board.print\(\) if self.turn == "X": try: raw = input\("Column \(1-7\), or q:) '
-("\).strip\(\).lower\(\) except \(EOFError, KeyboardInterrupt\): print\("\\nGoodbye."\) return if raw) '
-(== "q": print\("Game quit."\) return try: col = int\(raw\) - 1 except ValueError:) '
-(print\("Please enter a number from 1 to 7, or q to quit."\) continue if not 0 <= col < COLS:) '
-(print\("Column must be between 1 and 7."\) continue else: col =) '
-(self.ai.choose_column\(self.board\) if col is None or not 0 <= col < COLS: print\("AI) '
-(returned an invalid column; ending game."\) return if self.board.drop\(col, self.turn\) is) '
-(None: if self.turn == "X": print\(f"Column {col + 1} is full. Choose another."\) continue) '
-(print\("AI chose a full column; ending game."\) return if self.board.winner\(self.turn\):) '
-(self.board.print\(\) print\(self.turn, "wins!"\) return if self.board.full\(\):) '
-(self.board.print\(\) print\("Draw."\) return self.turn = "O" if self.turn == "X" else "X") '
-() '
-(In game.py, add concise move-level feedback that prints which column the player or AI) '
-(successfully placed their disc into, appearing exactly once per actual move) '
-() '
-(Adding move-announcement messages for player and AI turns.) '
-(Adding move-announcement messages for player and AI turns.) '
-() '
-(Still no files in this workspace, so here is the change for your game.py. Add one print) '
-(right after the successful drop, and nothing else needs to move:) '
-(python) '
-(if self.board.drop\(col, self.turn\) is None: if self.turn == "X": print\(f"Column {col + 1}) '
-(is full. Choose another."\) continue print\("AI chose a full column; ending game."\) return) '
-(who = "You" if self.turn == "X" else "AI" print\(f"{who} placed a disc in column {col +) '
-(1}."\) if self.board.winner\(self.turn\): self.board.print\(\) print\(self.turn, "wins!"\) return) '
-() '
-(The message prints exactly once per move, for these reasons:) '
-(Only after success: it sits after the failed-drop branch, which continues or returns.) '
-(Full-column attempts, invalid input and AI errors never reach it.) '
-(Before win and draw checks: the winning or drawing move is announced too, then the final) '
-(board and result follow.) '
-(Not in the loop header: a re-prompt after bad input doesn't repeat any move message.) '
-(Column numbering: it prints col + 1 so it matches the 1-7 numbers the player types.) '
-() '
-(Example output:) '
-(You placed a disc in column 4. AI placed a disc in column 4.) '
-() '
-(If you'd rather show X and O than "You" and "AI", replace the who line with who =) '
-(self.turn.) '
-() '
-([Claude is AI and can make) '
+/F1 8.5 Tf 40 810 Td (Lab 4: VibeCoding - Prompt Trajectory Log) Tj 340 0 Td (Page 2 of 4) Tj
+ET BT 40 780 Td 13.5 TL
+/F3 8.5 Tf (        except \(EOFError, KeyboardInterrupt\):) ' /F1 9 Tf
+/F3 8.5 Tf (            print\('\\nGoodbye.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            return) ' /F1 9 Tf
+/F3 8.5 Tf (        if raw == 'q':) ' /F1 9 Tf
+/F3 8.5 Tf (            print\('Game quit.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            return) ' /F1 9 Tf
+/F3 8.5 Tf (        try:) ' /F1 9 Tf
+/F3 8.5 Tf (            col = int\(raw\) - 1) ' /F1 9 Tf
+/F3 8.5 Tf (        except ValueError:) ' /F1 9 Tf
+/F3 8.5 Tf (            print\('Please enter a number from 1 to 7, or q to quit.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            continue) ' /F1 9 Tf
+/F3 8.5 Tf (        if not 0 <= col < COLS:) ' /F1 9 Tf
+/F3 8.5 Tf (            print\('Column must be between 1 and 7.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            continue) ' /F1 9 Tf
+/F3 8.5 Tf (    else:) ' /F1 9 Tf
+/F3 8.5 Tf (        col = self.ai.choose_column\(self.board\)) ' /F1 9 Tf
+/F3 8.5 Tf (        if col is None or not 0 <= col < COLS:) ' /F1 9 Tf
+/F3 8.5 Tf (            print\('AI returned an invalid column; ending game.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            return) ' /F1 9 Tf
+/F1 9 Tf () '
+/F3 8.5 Tf (    if self.board.drop\(col, self.turn\) is None:) ' /F1 9 Tf
+/F3 8.5 Tf (        if self.turn == 'X':) ' /F1 9 Tf
+/F3 8.5 Tf (            print\(f'Column {col + 1} is full. Choose another.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            continue) ' /F1 9 Tf
+/F3 8.5 Tf (        print\('AI chose a full column; ending game.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (        return) ' /F1 9 Tf
+/F1 9 Tf () '
+/F3 8.5 Tf (    if self.board.winner\(self.turn\):) ' /F1 9 Tf
+/F3 8.5 Tf (        self.board.print\(\)) ' /F1 9 Tf
+/F3 8.5 Tf (        print\(self.turn, 'wins!'\)) ' /F1 9 Tf
+/F3 8.5 Tf (        return) ' /F1 9 Tf
+/F3 8.5 Tf (    if self.board.full\(\):) ' /F1 9 Tf
+/F3 8.5 Tf (        self.board.print\(\)) ' /F1 9 Tf
+/F3 8.5 Tf (        print\('Draw.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (        return) ' /F1 9 Tf
+/F3 8.5 Tf (    self.turn = 'O' if self.turn == 'X' else 'X') ' /F1 9 Tf
+/F1 9 Tf () '
+/F1 8 Tf (==================================================================) '
+/F2 10.5 Tf (PROMPT 3 \(Task 3: Improve the AI Decision Making\)) ' /F1 9 Tf
+/F1 8 Tf (==================================================================) '
+/F2 9.5 Tf (User Prompt:) ' /F1 9 Tf
+/F1 9 Tf (    In ai.py, upgrade the AI decision-making: first check if the AI has an immediate winning) '
+/F1 9 Tf (    move and take it; second check if the opponent has an immediate winning move on their next) '
+/F1 9 Tf (    turn and block it; otherwise choose safely from the remaining legal columns. Handle full) '
 ET
 endstream
 endobj
-7 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 9 0 R /F2 10 0 R >> >> /Contents 8 0 R >> endobj
-8 0 obj << /Length 248 >> stream
+7 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R /F3 13 0 R >> >> /Contents 8 0 R >> endobj
+8 0 obj << /Length 2857 >> stream
 BT
-/F2 9 Tf 40 810 Td (1 Prompt - Cont.) Tj 420 0 Td (Page 3 of 3) Tj
-ET BT /F1 9 Tf 40 780 Td 13.5 TL
-(mistakes.]\(https://support.anthropic.com/en/articles/8525154-claude-is-providing-) '
-(incorrect-or-misleading-responses-what-s-going-on\)) '
+/F1 8.5 Tf 40 810 Td (Lab 4: VibeCoding - Prompt Trajectory Log) Tj 340 0 Td (Page 3 of 4) Tj
+ET BT 40 780 Td 13.5 TL
+/F1 9 Tf (    columns safely.) '
+/F1 9 Tf () '
+/F2 9.5 Tf (LLM Response / Implemented Code \(ai.py\):) ' /F1 9 Tf
+/F3 8.5 Tf (import copy) ' /F1 9 Tf
+/F3 8.5 Tf (import random) ' /F1 9 Tf
+/F3 8.5 Tf (COLS = 7) ' /F1 9 Tf
+/F3 8.5 Tf () ' /F1 9 Tf
+/F3 8.5 Tf (class AI:) ' /F1 9 Tf
+/F3 8.5 Tf (    def choose_column\(self, board, me='O', opponent='X'\):) ' /F1 9 Tf
+/F3 8.5 Tf (        legal = [c for c in range\(COLS\) if board.grid[0][c] == '.']) ' /F1 9 Tf
+/F3 8.5 Tf (        if not legal: return None) ' /F1 9 Tf
+/F3 8.5 Tf (        # 1. Take an immediate win.) ' /F1 9 Tf
+/F3 8.5 Tf (        for col in legal:) ' /F1 9 Tf
+/F3 8.5 Tf (            if self._wins_if_played\(board, col, me\):) ' /F1 9 Tf
+/F3 8.5 Tf (                return col) ' /F1 9 Tf
+/F3 8.5 Tf (        # 2. Block the opponent's immediate win.) ' /F1 9 Tf
+/F3 8.5 Tf (        for col in legal:) ' /F1 9 Tf
+/F3 8.5 Tf (            if self._wins_if_played\(board, col, opponent\):) ' /F1 9 Tf
+/F3 8.5 Tf (                return col) ' /F1 9 Tf
+/F3 8.5 Tf (        # 3. Choose safely: avoid moves handing opponent a win above & prefer center.) ' /F1 9 Tf
+/F3 8.5 Tf (        safe = [c for c in legal if not self._gives_win_above\(board, c, me, opponent\)]) ' /F1 9 Tf
+/F3 8.5 Tf (        candidates = safe or legal) ' /F1 9 Tf
+/F3 8.5 Tf (        center = COLS // 2) ' /F1 9 Tf
+/F3 8.5 Tf (        best = min\(abs\(c - center\) for c in candidates\)) ' /F1 9 Tf
+/F3 8.5 Tf (        return random.choice\([c for c in candidates if abs\(c - center\) == best]\)) ' /F1 9 Tf
+/F3 8.5 Tf () ' /F1 9 Tf
+/F3 8.5 Tf (    @staticmethod) ' /F1 9 Tf
+/F3 8.5 Tf (    def _wins_if_played\(board, col, token\):) ' /F1 9 Tf
+/F3 8.5 Tf (        trial = copy.deepcopy\(board\)) ' /F1 9 Tf
+/F3 8.5 Tf (        if trial.drop\(col, token\) is None: return False) ' /F1 9 Tf
+/F3 8.5 Tf (        return trial.winner\(token\)) ' /F1 9 Tf
+/F3 8.5 Tf () ' /F1 9 Tf
+/F3 8.5 Tf (    @staticmethod) ' /F1 9 Tf
+/F3 8.5 Tf (    def _gives_win_above\(board, col, me, opponent\):) ' /F1 9 Tf
+/F3 8.5 Tf (        trial = copy.deepcopy\(board\)) ' /F1 9 Tf
+/F3 8.5 Tf (        if trial.drop\(col, me\) is None: return False) ' /F1 9 Tf
+/F3 8.5 Tf (        if trial.grid[0][col] != '.': return False) ' /F1 9 Tf
+/F3 8.5 Tf (        return trial.drop\(col, opponent\) is not None and trial.winner\(opponent\)) ' /F1 9 Tf
+/F1 9 Tf () '
+/F1 8 Tf (==================================================================) '
+/F2 10.5 Tf (PROMPT 4 \(Task 4: Move-Level Feedback\)) ' /F1 9 Tf
+/F1 8 Tf (==================================================================) '
+/F2 9.5 Tf (User Prompt:) ' /F1 9 Tf
+/F1 9 Tf (    In game.py, add concise move-level feedback that prints which column the player or AI) '
 ET
 endstream
 endobj
-9 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
-10 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+9 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 11 0 R /F2 12 0 R /F3 13 0 R >> >> /Contents 10 0 R >> endobj
+10 0 obj << /Length 1375 >> stream
+BT
+/F1 8.5 Tf 40 810 Td (Lab 4: VibeCoding - Prompt Trajectory Log) Tj 340 0 Td (Page 4 of 4) Tj
+ET BT 40 780 Td 13.5 TL
+/F1 9 Tf (    successfully placed their disc into, appearing exactly once per actual move.) '
+/F1 9 Tf () '
+/F2 9.5 Tf (LLM Response / Implemented Code \(game.py\):) ' /F1 9 Tf
+/F3 8.5 Tf (    if self.board.drop\(col, self.turn\) is None:) ' /F1 9 Tf
+/F3 8.5 Tf (        if self.turn == 'X':) ' /F1 9 Tf
+/F3 8.5 Tf (            print\(f'Column {col + 1} is full. Choose another.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (            continue) ' /F1 9 Tf
+/F3 8.5 Tf (        print\('AI chose a full column; ending game.'\)) ' /F1 9 Tf
+/F3 8.5 Tf (        return) ' /F1 9 Tf
+/F3 8.5 Tf () ' /F1 9 Tf
+/F3 8.5 Tf (    who = 'You' if self.turn == 'X' else 'AI') ' /F1 9 Tf
+/F3 8.5 Tf (    print\(f'{who} placed a disc in column {col + 1}.'\)) ' /F1 9 Tf
+/F1 9 Tf () '
+/F2 9.5 Tf (Feedback Mechanism Explanation:) ' /F1 9 Tf
+/F1 9 Tf (- Only after success: placed after failed-drop branch so errors don't trigger messages.) '
+/F1 9 Tf (- Before win/draw checks: announces the winning move before showing the terminal result.) '
+/F1 9 Tf (- Prints col + 1 to correspond directly with 1-7 user input.) '
+/F1 9 Tf () '
+/F2 9.5 Tf (Example Console Output:) ' /F1 9 Tf
+/F3 8.5 Tf (You placed a disc in column 4.) ' /F1 9 Tf
+/F3 8.5 Tf (AI placed a disc in column 4.) ' /F1 9 Tf
+ET
+endstream
+endobj
+11 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+12 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+13 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Courier >> endobj
 xref
-0 11
+0 14
 0000000000 65535 f 
 0000000009 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
 0000000058 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
+0000000133 00000 n 
+0000000282 00000 n 
+0000003253 00000 n 
+0000003402 00000 n 
+0000006176 00000 n 
+0000006325 00000 n 
+0000009234 00000 n 
+0000009384 00000 n 
+0000010812 00000 n 
+0000010883 00000 n 
+0000010959 00000 n 
+trailer << /Size 14 /Root 1 0 R >>
 startxref
-7860
-%%EOF
-0000000127 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000000264 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000003873 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000004010 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000007278 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000007415 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000007714 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
-%%EOF
-0000007784 00000 n 
-trailer << /Size 11 /Root 1 0 R >>
-startxref
-7860
+11028
 %%EOF
