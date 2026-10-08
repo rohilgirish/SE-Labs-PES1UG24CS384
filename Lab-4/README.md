@@ -86,8 +86,10 @@ Lab-4/
 ├── game.py
 ├── board.py
 ├── ai.py
-├── before.mp4
-└── after.mp4
+└── deliverables/
+    ├── before.mp4
+    ├── after.mp4
+    └── chat_history.pdf
 ```
 
 ## Identified Bugs & Original Issues
@@ -120,6 +122,6 @@ Lab-4/
 
 Submission is only the following three things:
 
-- [x] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior (`before.mp4`)
-- [x] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working (`after.mp4`)
-- [x] The Chat/LLM used page link, with the complete chat history: https://claude.ai/share/56914cc2-0791-40fb-b8c1-a1e3acbea036
+- [x] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior (`deliverables/before.mp4`)
+- [x] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working (`deliverables/after.mp4`)
+- [x] The Chat/LLM used page link, with the complete chat history: https://claude.ai/share/56914cc2-0791-40fb-b8c1-a1e3acbea036 (also available as `deliverables/chat_history.pdf`)
